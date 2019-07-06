@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title></title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+	<link rel="stylesheet" type="text/css" href="/stylesheets/bootstrap.min.css"/>
+	<script src="/javascripts/jquery-1.11.0.js" type="text/javascript" charset="utf-8"></script>
+	<script src="https://cdn.bootcss.com/blueimp-md5/2.10.0/js/md5.min.js"></script>
+  </head>
+  <body>
+  	
+  	<%-include('head.ejs') %>
+  	
+  	<div class="container">
+  		<div class="row">
+  			<div class="form-group">
+			    <label for="exampleInputEmail1">用户名</label>
+			    <input type="text" class="form-control" id="username" placeholder="username">
+			  </div>
+			  <div class="form-group">
+			    <label for="exampleInputPassword1">密码</label>
+			    <input type="password" class="form-control" id="password" placeholder="Password">
+			  </div>
+  		</div>
+  	</div>
+  	<button class="btn btn-success login">登陆</button>
+  	<script type="text/javascript">
+  		$('.login').click(function(){
+  		let password=md5($('#password').val())
+  		console.log(password)
+  		$.ajax({
+  			type:"post",
+  			url:"/users/login",
+  			data:{username:$('#username').val(),password:password},
+  			dataType:'json',
+  			async:true,
+  			success:function(data){
+  				console.log(data)
+  				if(data.code==200){
+  					location.href='/'
+  				}else{
+  					location.href="/login"
+  				}
+  			}
+  		});
+  	})
+  	</script>
+  </body>
+</html>

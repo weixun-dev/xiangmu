@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title></title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <link rel="stylesheet" type="text/css" href="/stylesheets/bootstrap.min.css" />
+    <script src="/javascripts/jquery-1.11.0.js" type="text/javascript" charset="utf-8"></script>
+    <script src="https://cdn.bootcss.com/blueimp-md5/2.10.0/js/md5.min.js"></script>
+    <script src="/xheditor/xheditor-1.2.2.min.js" type="text/javascript" charset="utf-8"></script>
+ 	<script src="/xheditor/xheditor_lang/zh-cn.js" type="text/javascript" charset="utf-8"></script>
+</head>
+
+<body>
+
+    <div class="container">
+        <div class="row">
+            <div class="form-group">
+                <label for="exampleInputEmail1">标题</label>
+                <input type="text" class="form-control" id="title" placeholder="title">
+            </div>
+            <div class="form-group">
+                <label for="exampleInputPassword1">内容</label>
+                <textarea name="" rows="10" cols="5" class="form-control xheditor" id="con" placeholder="内容"></textarea>
+            </div>
+        </div>
+    </div>
+    <button class="btn btn-primary fabu">发布文章</button>
+
+    <div class="row">
+        <table class="table">
+            <tr>
+                <th>索引</th>
+                <th>标题</th>
+            </tr>
+
+            <% list.map(function(item,i){ %>
+                <tr>
+                    <td>
+                        <%-i %>
+                    </td>
+                    <td>
+                        <a href="/detail?id=<%-item._id %>">
+                            <%-item.title %>
+                        </a>
+                    </td>
+                </tr>
+                <% }) %>
+
+        </table>
+
+    </div>
+
+    <nav aria-label="Page navigation">
+        <ul class="pagination">
+            <li>
+                <a href="/boke?pageNo=<%-pageNo <=1?1: parseInt(pageNo)-1 %>" aria-label="Previous">
+                    <span aria-hidden="true">上一页</span>
+                </a>
+            </li>
+
+            <% if(page>4){ %>
+                <li><a href="/boke?pageNo=1">1</a></li>
+                <li><a href="/boke?pageNo=2">2</a></li>
+                <li><a href="#">...</a></li>
+                <li>
+                    <a href="/boke?pageNo=<%-page-1 %>">
+                        <%-page-1 %>
+                    </a>
+                </li>
+                <li>
+                    <a href="/boke?pageNo=<%-page %>">
+                        <%-page %>
+                    </a>
+                </li>
+                <% }else{ %>
+                    <% for(let i=0;i<page;i++){ %>
+                        <li>
+                            <a href="/boke?pageNo=<%-i+1 %>">
+                                <%-i+1 %>
+                            </a>
+                        </li>
+                        <% } %>
+                            <% } %>
+                                <li>
+                                    <a href="/boke?pageNo=<%-pageNo >=page?page: parseInt(pageNo)+1 %>" aria-label="Next">
+                                        <span aria-hidden="true">下一页</span>
+                                    </a>
+                                </li>
+        </ul>
+    </nav>
+
+
+
+</body>
+<script src="/javascripts/fwb.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript">
+    $('.fabu').click(function() {
+        $.ajax({
+            type: "post",
+            url: "/users/boke",
+            data: {
+                title: $('#title').val(),
+                con: $('#con').val()
+            },
+            dataType: "json",
+            async: true,
+            success: function(data) {
+                alert(data.message)
+                location.href = '/boke'
+            }
+        });
+    })
+</script>
+
+</html>

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title></title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <link rel="stylesheet" href="/stylesheets/bootstrap.min.css" />
+    <script src="/javascripts/jquery-1.11.0.js" type="text/javascript" charset="utf-8"></script>
+  </head>
+  <body>
+    <%-include('head.ejs') %>
+    <% if(name){%>
+    	<h2>欢迎：<%-name%></h2>
+    	<button class="btn btn-success" onclick="location.href='/relogin'">退出登陆</button>
+  	<button class="btn btn-primary" onclick="location.href='/boke'">发布博客</button>
+  	
+    	<%}else{%>
+   
+    		<button class="btn btn-success" onclick="location.href='/login'">登陆</button>
+  	<button class="btn btn-primary" onclick="location.href='/register'">注册</button>
+    		
+    		<%}%>
+    
+  	
+  	
+  	
+  	<script type="text/javascript">
+  		
+  		
+  	</script>
+  </body>
+</html>
